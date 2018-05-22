@@ -8,12 +8,6 @@ class Position:
      def __repr__(self):
          return self.mark
 
-     def change_mark(self, player):
-         if player == "computer":
-             self.mark = "O"
-         else:
-             self.mark = "X"
-
      def is_open(self):
          if self.mark == " ":
              return True
@@ -53,11 +47,13 @@ class Board:
             r_count += 1
         return ""
 
-    def human_turn(self):
+    def turn(self, player):
         row = None
         col = None
 
         while True:
+            print(f"It's {player}'s turn.")
+
             player_input = input("Please enter the row number and column number you wish to play, separated by a space: ")
             player_input = player_input.lower()
             player_input = player_input.split()
@@ -65,18 +61,21 @@ class Board:
             row = int(player_input[0])
             col = int(player_input[1])
             if (row >= 0 and row <=self.size - 1) and (col >= 0 and col <= self.size -1):
-                break
+                if self.board[row][col].is_open():
+                    if player == "Player X":
+                        self.board[row][col].mark = "X"
+                    else:
+                        self.board[row][col].mark = "O"
+                    break
+                else:
+                    print("I'm sorry, that position has already been taken.")
+
             else:
                 print("I'm sorry, that's not a valid entry.  Example, to play in row 0 column 0, enter: 0 0")
 
 
-
-
-    def computer_turn(self):
+    def someone_won(self):
         pass
-
-
-
 
 
 
@@ -86,6 +85,16 @@ class Board:
 
 #Start of program
 
-x = Board()
-print(x)
-x.human_turn()
+player_x = "Player X"
+player_o = "player O"
+
+game = Board()
+x=0
+
+for _ in range(6):
+    print(game)
+    if x % 2 == 0:
+        game.turn(player_x)
+    else:
+        game.turn(player_o)
+    x += 1
