@@ -1,10 +1,24 @@
 
+import random
+
 class Position:
      def __init__(self):
-         self.mark = " X "
+         self.mark = " "
 
      def __repr__(self):
-         return "X"
+         return self.mark
+
+     def change_mark(self, player):
+         if player == "computer":
+             self.mark = "O"
+         else:
+             self.mark = "X"
+
+     def is_open(self):
+         if self.mark == " ":
+             return True
+         else:
+             return False
 
 
 class Board:
@@ -39,6 +53,34 @@ class Board:
             r_count += 1
         return ""
 
+    def human_turn(self):
+        row = None
+        col = None
+
+        while True:
+            player_input = input("Please enter the row number and column number you wish to play, separated by a space: ")
+            player_input = player_input.lower()
+            player_input = player_input.split()
+
+            row = int(player_input[0])
+            col = int(player_input[1])
+            if (row >= 0 and row <=self.size - 1) and (col >= 0 and col <= self.size -1):
+                break
+            else:
+                print("I'm sorry, that's not a valid entry.  Example, to play in row 0 column 0, enter: 0 0")
+
+
+
+
+    def computer_turn(self):
+        pass
+
+
+
+
+
+
+
 
 
 
@@ -46,3 +88,4 @@ class Board:
 
 x = Board()
 print(x)
+x.human_turn()
