@@ -8,12 +8,13 @@ class Position:
      def __repr__(self):
          return self.mark
 
+"""
      def is_open(self):
          if self.mark == " ":
              return True
          else:
              return False
-
+"""
 
 class Board:
     def __init__(self):
@@ -47,6 +48,21 @@ class Board:
             r_count += 1
         return ""
 
+    def game_over(self):
+        new_list = []
+        r_idx = 0
+        c_idx = 0
+        for _ in range(self.size):
+            new_list.append([])
+
+        for row in self.board:
+            c_idx = 0
+            for col in row:
+                new_list[r_idx].append(str(self.board[r_idx][c_idx].mark))
+                c_idx += 1
+            r_idx += 1
+        print(new_list)
+
     def turn(self, player):
         row = None
         col = None
@@ -61,7 +77,7 @@ class Board:
             row = int(player_input[0])
             col = int(player_input[1])
             if (row >= 0 and row <=self.size - 1) and (col >= 0 and col <= self.size -1):
-                if self.board[row][col].is_open():
+                if self.board[row][col].mark == " ":
                     if player == "Player X":
                         self.board[row][col].mark = "X"
                     else:
@@ -74,8 +90,7 @@ class Board:
                 print("I'm sorry, that's not a valid entry.  Example, to play in row 0 column 0, enter: 0 0")
 
 
-    def someone_won(self):
-        pass
+
 
 
 
@@ -90,7 +105,7 @@ player_o = "player O"
 
 game = Board()
 x=0
-
+"""
 for _ in range(6):
     print(game)
     if x % 2 == 0:
@@ -98,3 +113,5 @@ for _ in range(6):
     else:
         game.turn(player_o)
     x += 1
+"""
+game.game_over()
