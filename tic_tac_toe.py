@@ -1,6 +1,8 @@
 
 import random
 
+#Start of Position class
+
 class Position:
      def __init__(self):
          self.mark = " "
@@ -8,15 +10,13 @@ class Position:
      def __repr__(self):
          return self.mark
 
-"""
-     def is_open(self):
-         if self.mark == " ":
-             return True
-         else:
-             return False
-"""
+
+#Start of Board class
 
 class Board:
+
+#__init__ method
+
     def __init__(self):
         self.board = []
         self.size = 3
@@ -27,6 +27,8 @@ class Board:
                 row.append(Position())
 
             self.board.append(row)
+
+#__str__ method
 
     def __str__(self):
         r_count = 0
@@ -48,8 +50,11 @@ class Board:
             r_count += 1
         return ""
 
-    def game_over(self):
+#game over method
+
+    def game_over(self, player):
         new_list = []
+        columns = []
         r_idx = 0
         c_idx = 0
         for _ in range(self.size):
@@ -61,7 +66,28 @@ class Board:
                 new_list[r_idx].append(str(self.board[r_idx][c_idx].mark))
                 c_idx += 1
             r_idx += 1
-        print(new_list)
+
+        for row in self.board:
+            columns.append([])
+
+        #Begin checks for win
+
+        for row in new_list:
+            if row.count("X") == 3 or row.count("O") == 3:
+                print(f"{player} has won the game!")
+                return True
+            columns[0].append(row[0])
+            columns[1].append(row[1])
+            columns[2].append(row[2])
+
+        for row in columns:
+            if row.count("X") == 3 or row.count("O") == 3:
+                print(f"{player} has won the game!")
+                return True
+
+        return False
+
+#start of turn method
 
     def turn(self, player):
         row = None
@@ -98,20 +124,38 @@ class Board:
 
 
 
+
+
 #Start of program
 
 player_x = "Player X"
 player_o = "player O"
+current_player = ""
 
 game = Board()
 x=0
+
+print(game)
+
+while True:
+    if x % 2 == 0:
+        current_player = player_x
+    else:
+        current_player = player_o
+    game.turn(current_player)
+    print(game)
+    if game.game_over(current_player):
+        break
+    x += 1
+
 """
-for _ in range(6):
+while not game.game_over(current_player):
     print(game)
     if x % 2 == 0:
         game.turn(player_x)
     else:
         game.turn(player_o)
     x += 1
-"""
+
 game.game_over()
+"""
