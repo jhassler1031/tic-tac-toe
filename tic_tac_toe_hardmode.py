@@ -119,20 +119,23 @@ class Board:
             print(f"It's {player}'s turn.")
 
             player_input = input("Please enter the row number and column number you wish to play, separated by a space: ")
-            player_input = player_input.lower()
-            player_input = player_input.split()
+            if player_input != "" and len(player_input) > 2 and len(player_input) < 4:
+                player_input = player_input.lower()
+                player_input = player_input.split()
 
-            row = int(player_input[0])
-            col = int(player_input[1])
-            if (row >= 0 and row <=self.size - 1) and (col >= 0 and col <= self.size -1):
-                if self.board[row][col].mark == " ":
-                    if player == "Player X":
-                        self.board[row][col].mark = "X"
-                    else:
-                        self.board[row][col].mark = "O"
-                    break
-                else:
-                    print("I'm sorry, that position has already been taken.")
+                if player_input[0].isdigit() and player_input[1].isdigit():
+
+                    row = int(player_input[0])
+                    col = int(player_input[1])
+                    if (row >= 0 and row <=self.size - 1) and (col >= 0 and col <= self.size -1):
+                        if self.board[row][col].mark == " ":
+                            if player == "Player X":
+                                self.board[row][col].mark = "X"
+                            else:
+                                self.board[row][col].mark = "O"
+                            break
+                        else:
+                            print("I'm sorry, that position has already been taken.")
 
             else:
                 print("I'm sorry, that's not a valid entry.  Example, to play in row 0 column 0, enter: 0 0")
@@ -142,9 +145,14 @@ class Board:
 
 #Start of program
 
+"""
 player_x = "Player X"
 player_o = "player O"
 current_player = ""
+"""
+
+players = ["Player X", "Player O"]
+counter = 0
 
 game = Board()
 x=0
@@ -152,12 +160,16 @@ x=0
 print(game)
 
 while True:
+    """
     if x % 2 == 0:
         current_player = player_x
     else:
         current_player = player_o
+    """
+    current_player = players[counter]
     game.turn(current_player)
     print(game)
     if game.game_over(current_player):
         break
-    x += 1
+    counter = int(not counter)
+    #x += 1
