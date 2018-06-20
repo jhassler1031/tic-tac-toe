@@ -58,9 +58,11 @@ class Board:
         diagonal = [["", "", ""], ["", "", ""]]
         r_idx = 0
         c_idx = 0
+        draw = 0
         for _ in range(self.size):
             new_list.append([])
 
+        #Builds lists for easy checking
         for row in self.board:
             c_idx = 0
             for col in row:
@@ -92,9 +94,15 @@ class Board:
             if row.count("X") == 3 or row.count("O") == 3:
                 print(f"{player} has won the game!")
                 return True
+            draw += row.count(" ")
             columns[0].append(row[0])
             columns[1].append(row[1])
             columns[2].append(row[2])
+
+        #Check for a draw
+        if draw == 0:
+            print("It's a draw")
+            return True
 
         for row in columns:
             if row.count("X") == 3 or row.count("O") == 3:
@@ -105,7 +113,6 @@ class Board:
             if row.count("X") == 3 or row.count("O") == 3:
                 print(f"{player} has won the game!")
                 return True
-
 
         return False
 
